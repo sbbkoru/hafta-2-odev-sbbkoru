@@ -1,42 +1,50 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('admin.index');
+
+    $categories = Categories::firstOrCreate(['title' => 'Mobilephone'],
+    ['description' => 'en iyi telefonlar', 'slug' => '/ceptelefonu']);
+
+    dd($categories);
+    // return view('admin.index');
 })->name('admin.index');
+
+Route::resource('Categories', CategoriesController::class)->except(['show']);
+
 
 Route::get('/login', function(){
     return view('admin.login');
 })->name('admin.login');
 
-Route::get('/admin/index', function(){
+Route::get('/admin', function(){
     return view('admin.index');
 })->name('admin.index');
 
- Route::prefix('/admin/category')->group(function(){
+ Route::prefix('/admin/categories')->group(function(){
 
-    Route::get('/index', [CategoryController::class, 'index'])
-    ->name('adminCategoryIndex');
+    Route::get('/index', [CategoriesController::class, 'index'])
+    ->name('adminCategoriesIndex');
 
-    Route::get('/edit', [CategoryController::class, 'edit'])
-    ->name('adminCategoryEdit');
+    Route::get('/{category}/edit', [CategoriesController::class, 'edit'])
+    ->name('adminCategoriesEdit');
 
+    Route::get('/create', [CategoriesController::class, 'create'])
+    ->name('adminCategoriesCreate');
+
+    Route::get('/store', [CategoriesController::class, 'store'])
+    ->name('adminCategoriesStore');
+
+    Route::get('/delete/{id}', [CategoriesController::class, 'destroy'])
+    ->name('adminCategoriesDelete');
 });
 
 Route::prefix('/admin/product')->group(function(){
