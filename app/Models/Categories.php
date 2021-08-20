@@ -12,6 +12,10 @@ class Categories extends Model
     protected $fillable = ['title', 'description', 'slug', 'status'];
 // protected $guarded = [];
 
+    public function getProducts(){
+        return $this->hasMany('App\Models\Products', 'categories_id', 'id');
+    }
+
     public static function statusIndicator($status){
         $data_ = [
             'a' => [

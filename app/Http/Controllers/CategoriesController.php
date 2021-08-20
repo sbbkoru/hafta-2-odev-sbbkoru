@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriesRequest;
 use App\Models\Categories;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Categories::where('status', '<>', 't')->get();
+        $categories = Categories::where('status', '<>', 't')->paginate(3);
         $title = 'Kategori Listesi';
         return view('admin.categories.index', compact('title', 'categories'));
     }
@@ -36,8 +37,9 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
+
         $input = request()->all();
         Categories::create($input);
 
@@ -76,8 +78,9 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriesRequest $request, $id)
     {
+
         $category = Categories::findOrFail($id);
         $input = request()->all();
         $category->fill($input)->save();

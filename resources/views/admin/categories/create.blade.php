@@ -20,28 +20,28 @@ use App\Models\Categories;
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Title</label>
-                                                <input type="text" id="first-name-vertical" class="form-control" name="title" >
+                                                <input type="text" id="first-name-vertical" class="form-control" name="title" value="{{ old('title')}}" >
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Description</label>
-                                                <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" ></textarea>
+                                                <textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" >{{ old('description ')}}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label>Slug</label>
-                                                <input type="text" id="first-name-vertical" class="form-control" name="slug" >
+                                                <input type="text" id="first-name-vertical" class="form-control" name="slug" value="{{ old('slug')}}" >
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-4">
                                     <h6>Status</h6>
                                     <fieldset class="form-group">
                                         <select class="form-select" id="basicSelect" name="status">
-                                            <option value="a" >Active</option>
-                                            <option value="p" >Passive</option>
+                                            <option value="a" @if (old('status') == 'a') selected @endif >Active</option>
+                                            <option value="p" @if (old('status') == 'p') selected @endif>Passive</option>
                                         </select>
                                     </fieldset>
                                 </div>

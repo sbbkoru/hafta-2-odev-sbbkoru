@@ -24,6 +24,22 @@
             @include('layout.sidebar');
         </div>
         <div id="main">
+            @if($message = Session::get('success'))
+                        <div class="alert alert-success mb-3">
+                            <h4 class="alert-heading">Başarılı</h4>
+                            <p>{{ $message }}</p>
+                        </div>
+            @endif
+            @if($errors->any())
+            <div class="alert alert-danger alert-dismissible show fade">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
@@ -65,8 +81,8 @@
                         <p>2021 &copy; Berkay Buyukkoru</p>
                     </div>
                     <div class="float-end">
-                        <p>Crafted with <span class="text-danger"><i class="bi bi-heart"></i></span> by <a
-                                href="http://ahmadsaugi.com">A. Saugi</a></p>
+                        <p>Crafted with <span class="text-danger"></span> by <a
+                                href="http://google.com">B. Buyukkoru</a></p>
                     </div>
                 </div>
             </footer>

@@ -1,20 +1,25 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\UserController;
 use App\Models\Categories;
+use App\Models\Products;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
 
 Route::get('/', function () {
 
-    $categories = Categories::firstOrCreate(['title' => 'Mobilephone'],
-    ['description' => 'en iyi telefonlar', 'slug' => '/ceptelefonu']);
+    $category = Categories::find(1);
+    echo $category->title . " kategorisine ait ürünler";
+    echo "<ul>";
+    foreach($category->getProducts as $product){
+        echo "<li>" . $product->title . "</li>";
+    }
+    echo "</ul>";
 
-    dd($categories);
     // return view('admin.index');
 })->name('admin.index');
 
@@ -28,6 +33,11 @@ Route::get('/login', function(){
 Route::get('/admin', function(){
     return view('admin.index');
 })->name('admin.index');
+
+Route::prefix('/admin')->name('admin.')->group(function(){
+    Route::view('/', 'admin.index');
+    Route::resource('products', ProductsController::class);
+});
 
  Route::prefix('/admin/categories')->group(function(){
 
@@ -47,15 +57,15 @@ Route::get('/admin', function(){
     ->name('adminCategoriesDelete');
 });
 
-Route::prefix('/admin/product')->group(function(){
+/* Route::prefix('/admin/product')->group(function(){
 
-    Route::get('/index', [ProductController::class, 'index'])
+    Route::get('/index', [ProductsController::class, 'index'])
     ->name('adminProductIndex');
 
-    Route::get('/edit', [ProductController::class, 'edit'])
+    Route::get('/edit', [ProductsController::class, 'edit'])
     ->name('adminProductEdit');
 
-});
+}); */
 
 
 Route::prefix('/admin/user')->group(function(){

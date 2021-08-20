@@ -23,6 +23,9 @@ use App\Models\Categories;
                                                 <label>Title</label>
                                                 <input type="text" id="first-name-vertical" class="form-control" name="title" value="{{$category->title}}">
                                             </div>
+                                            @error('title')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group">
